@@ -1,4 +1,4 @@
-[![Hackage](https://img.shields.io/hackage/v/arity-generic-liftA.svg)](http://hackage.haskell.org/package/arity-generic-liftA)
+[![Hackage](https://img.shields.io/hackage/v/arity-generic-liftA.svg)](http://hackage.haskell.org/package/arity-generic-liftA) [![Build Status](https://travis-ci.org/oisdk/arity-generic-liftA.svg?branch=master)](https://travis-ci.org/oisdk/arity-generic-liftA)
 
 # arity-generic-liftA
 
