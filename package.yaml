@@ -5,6 +5,8 @@ license:             MIT
 author:              "Donnacha Oisín Kidney"
 maintainer:          "mail@doisinkidney.com"
 copyright:           "2018 Donnacha Oisín Kidney"
+synopsis:            Provides an arity-generic version of the liftA2, liftA3... liftAn functions.
+category:            Control
 
 extra-source-files:
 - README.md

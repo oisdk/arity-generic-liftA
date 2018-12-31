@@ -2,11 +2,13 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: aaa007ec3d29292e2293d12aca61f6a078bf62dda3d4912b12fa4baeba4557fe
+-- hash: a5291f7acc496b8e14741d59cc33eeb92e35c60db728f80aae2427f87c8d690e
 
 name:           arity-generic-liftA
 version:        0.1.0.0
+synopsis:       Provides an arity-generic version of the liftA2, liftA3... liftAn functions.
 description:    Please see the README on GitHub at <https://github.com/oisdk/arity-generic-liftA#readme>
+category:       Control
 homepage:       https://github.com/oisdk/arity-generic-liftA#readme
 bug-reports:    https://github.com/oisdk/arity-generic-liftA/issues
 author:         Donnacha Oisín Kidney
