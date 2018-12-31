@@ -2,49 +2,37 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b59e1424d8e96bb126dda688133172b603ab9f5ac2601b7079bb6e42c3b57d8a
+-- hash: aaa007ec3d29292e2293d12aca61f6a078bf62dda3d4912b12fa4baeba4557fe
 
 name:           arity-generic-liftA
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/arity-generic-liftA#readme>
-homepage:       https://github.com/githubuser/arity-generic-liftA#readme
-bug-reports:    https://github.com/githubuser/arity-generic-liftA/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2018 Author name here
-license:        BSD3
+description:    Please see the README on GitHub at <https://github.com/oisdk/arity-generic-liftA#readme>
+homepage:       https://github.com/oisdk/arity-generic-liftA#readme
+bug-reports:    https://github.com/oisdk/arity-generic-liftA/issues
+author:         Donnacha Oisín Kidney
+maintainer:     mail@doisinkidney.com
+copyright:      2018 Donnacha Oisín Kidney
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
 extra-source-files:
-    ChangeLog.md
     README.md
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/arity-generic-liftA
+  location: https://github.com/oisdk/arity-generic-liftA
 
 library
   exposed-modules:
-      Lib
+      Control.Applicative.Lift
+      Control.Applicative.Lift.Internal
   other-modules:
       Paths_arity_generic_liftA
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
-  default-language: Haskell2010
-
-executable arity-generic-liftA-exe
-  main-is: Main.hs
-  other-modules:
-      Paths_arity_generic_liftA
-  hs-source-dirs:
-      app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      arity-generic-liftA
-    , base >=4.7 && <5
   default-language: Haskell2010
 
 test-suite arity-generic-liftA-test
@@ -58,4 +46,5 @@ test-suite arity-generic-liftA-test
   build-depends:
       arity-generic-liftA
     , base >=4.7 && <5
+    , doctest >=0.3.0
   default-language: Haskell2010
