@@ -1,0 +1,31 @@
+name:                arity-generic-liftA
+version:             0.1.0.0
+github:              "oisdk/arity-generic-liftA"
+license:             MIT
+author:              "Donnacha Oisín Kidney"
+maintainer:          "mail@doisinkidney.com"
+copyright:           "2018 Donnacha Oisín Kidney"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+description:         Please see the README on GitHub at <https://github.com/oisdk/arity-generic-liftA#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+tests:
+  arity-generic-liftA-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - arity-generic-liftA
+    - doctest >=0.3.0
