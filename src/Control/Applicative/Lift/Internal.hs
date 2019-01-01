@@ -56,7 +56,7 @@ instance {-# OVERLAPPING #-} Applyable Z a where
   apply = id
   {-# INLINE apply #-}
 
-instance Applyable n b => Applyable (S n) (a -> b) where
+instance (ab ~ (a -> b), Applyable n b) => Applyable (S n) ab where
   apply f x = apply @n (f <*> x)
   {-# INLINE apply #-}
 
