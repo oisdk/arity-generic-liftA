@@ -1,8 +1,13 @@
+{-# LANGUAGE AllowAmbiguousTypes   #-}
 {-# LANGUAGE DataKinds             #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE TypeOperators         #-}
+{-# LANGUAGE UndecidableInstances  #-}
 
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 {-# OPTIONS_HADDOCK not-home #-}
@@ -24,8 +29,13 @@
 --       <https://github.com/goldfirere/thesis/raw/master/built/thesis.pdf>
 module Control.Applicative.Lift.Internal where
 
--- | Simple implementation of Peano numbers.
+import GHC.TypeLits (Nat, type (-))
+
 data N = Z | S N
+
+type family FromNat (n :: Nat) :: N where
+  FromNat 0 = Z
+  FromNat n = S (FromNat (n - 1))
 
 -- | @'AppFunc' f n a@ returns the type of the function @a@ "lifted" over @n@
 -- arguments.
@@ -39,15 +49,15 @@ type family CountArgs f where
   CountArgs _ = Z
 
 -- | The actual class which constructs the lifted function.
-class (CountArgs a ~ n) => Applyable a n where
-  apply :: Applicative f => f a -> AppFunc f (CountArgs a) a
+class Applyable (n :: N) a where
+  apply :: Applicative f => f a -> AppFunc f n a
 
-instance (CountArgs a ~ Z) => Applyable a Z where
+instance {-# OVERLAPPING #-} Applyable Z a where
   apply = id
   {-# INLINE apply #-}
 
-instance Applyable b n => Applyable (a -> b) (S n) where
-  apply f x = apply (f <*> x)
+instance (ab ~ (a -> b), Applyable n b) => Applyable (S n) ab where
+  apply f x = apply @n (f <*> x)
   {-# INLINE apply #-}
 
 -- | Lift a function over applicative arguments. This function is an
@@ -79,6 +89,17 @@ instance Applyable b n => Applyable (a -> b) (S n) where
 -- Finally, everything is aggressively inlined, so there should be no
 -- cost to using this function over manually writing
 -- 'Control.Applicative.liftA3' etc.
-lift :: (Applyable b n, Applicative f) => (a -> b) -> (f a -> AppFunc f n b)
-lift f x = apply (fmap f x)
+lift :: forall f a b. (Applyable (CountArgs b) b, Applicative f) => (a -> b) -> (f a -> AppFunc f (CountArgs b) b)
+lift f x = apply @(CountArgs b) (fmap f x)
 {-# INLINE lift #-}
+
+-- | A variant of 'lift' that must be explicitly applied to a type-level number,
+-- but it is more flexible by allowing the function parameter to have more
+-- arguments.
+--
+-- >>> :set -XDataKinds -XTypeApplications
+-- >>> fmap ($ 10) (lift' @1 (+) (Just 1) :: Maybe (Int -> Int))
+-- Just 11
+lift' :: forall n f a. (Applyable (FromNat n) a, Applicative f) => a -> AppFunc f (FromNat n) a
+lift' f = apply @(FromNat n) (pure @f f)
+{-# INLINE lift' #-}
